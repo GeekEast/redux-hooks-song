@@ -1,44 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Define Redux
+###  Define Actions
+- 用描述性的方式告诉store应该如何处理数据;
+- Action Creator用来创造Actions(code reuse);
+```javascript
+export const selectSong = (song: any) => { return { type: 'SONG_SELECTED', payload: song } }; 
+```
 
-## Available Scripts
+### Define Reducers
+- 定义reducers: 定义数据的`初始状态`和`处理方法`
+```javascript
+export const songsReducer = () => {
+  return [
+    { title: 'No Scrubs', duration: '4:05' },
+    { title: 'Macarena', duration: '2:30' },
+    { title: 'All Star', duration: '3:15' },
+    { title: 'I want it That Way', duration: '5:10' }
+  ];
+};
 
-In the project directory, you can run:
+export const selectedSongsReducer = (selectedSong = null, action: { type: string, payload: any }) => {
+  if (action.type === 'SONG_SELECTED') {
+    return action.payload;
+  }
+  return selectedSong;
+};
+```
 
-### `yarn start`
+- 整合reducers
+```javascript
+// components/reducers/index
+import { combineReducers } from 'redux';
+import { selectedSongsReducer, songsReducer } from './Song'
+export default combineReducers({
+  songs: songsReducer,
+  selectedSong: selectedSongsReducer
+});
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Define Store
+- 在全局载入store
+```javascript
+import { createStore } from "redux";
+import reducer from './reducers';
+const store = createStore(reducer);
+export default store;
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Use Redux
+### Read data
+```javascript
+import { useSelector } from 'react-redux';
+const selectedSong = useSelector(state => _.get(state, ['selectedSong'], null));
+```
 
-### `yarn test`
+### Send data
+```javascript
+const dispatch = useDispatch();
+  <button className="ui button primary" 
+      onClick={() => dispatch(selectSong(song))}> Select </button>
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
