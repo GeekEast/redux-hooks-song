@@ -1,3 +1,18 @@
+
+## Table of Contents
+
+- [Define Redux](#define-redux)
+  - [Define Actions: `{type:..., payload:...}`](#define-actions)
+  - [Define Reducers: `(state, action)=>{...}`](#define-reducers)
+  - [Define Store: `createStore()`](#define-store)
+- [Use Redux](#use-redux)
+  - [Read data: `useSelector()`](#read-data)
+  - [Send data: `useDispatch()`](#send-data)
+- [Others](#others)
+  - [Collect State: `useReducer()`](#usereducer)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Define Redux
 ###  Define Actions
 - 用描述性的方式告诉store应该如何处理数据;
@@ -60,4 +75,28 @@ const dispatch = useDispatch();
       onClick={() => dispatch(selectSong(song))}> Select </button>
 ```
 
+## Others
+### useReducer
+- 并**不是**`redux`的一部分
+- 是用来**聚合**某些状态用的，**局部**`状态管理器`
+```javascript
+const [isLoading, setIsLoading] = useState(false);
+const [isError, setIsError] = useState(false);
+const [data, setData] = useState({});
+```
+```javascript
+const reducer = (prevState, action) => {
+  switch(action.type){
+    case 'a': return {...state};
+    case 'b': return {...state, x:1};
+    case 'c': return {...state, x:2};
+    default: throw new Error();
+  }
+}
+const [state, dispatch] = useReducer(reducer, {
+  isLoading: false,
+  isError: false,
+  data: {}
+})
+```
 
