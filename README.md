@@ -81,7 +81,6 @@ const dispatch = useDispatch();
 - 是用来**聚合**某些相互依赖的状态用的，**局部**`状态管理器`
 - 在`functional component`的情景下，能够`callback function`读取到`最新的数据`，而不是`snapshot`的数据
 - `useReducer`跟`useState`一样，每次**状态变化**都会引起**组件的重新渲染**
-- **useReducer并非中心存储**: 与redux相比，`useReducer`会引起所在组件的重新渲染，而redux不一定
 - **引起状态变化的组件和存储状态的组件不是同一个，能够避免不必要的更新**
 ```javascript
 const [isLoading, setIsLoading] = useState(false);
