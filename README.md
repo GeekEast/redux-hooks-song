@@ -1,6 +1,6 @@
 
 ## Table of Contents
-
+- [Install Redux](#install-redux)
 - [Define Redux](#define-redux)
   - [Define Actions: `{type:..., payload:...}`](#define-actions)
   - [Define Reducers: `(state, action)=>{...}`](#define-reducers)
@@ -12,7 +12,11 @@
   - [Collect State: `useReducer()`](#usereducer)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
+## Install Redux
+```sh
+yarn add react-redux redux
+yarn add --dev @types/react-redux @types/redux
+```
 ## Define Redux
 ###  Define Actions
 - 用描述性的方式告诉store应该如何处理数据;
